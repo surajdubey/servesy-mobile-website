@@ -1,7 +1,8 @@
 
 import React, { Component } from 'react';
 import Recaptcha from 'react-recaptcha';
-
+import config from '../../config';
+import sendEmail from '../sendEmail';
 
 class App extends Component {
 
@@ -14,7 +15,6 @@ class App extends Component {
     }
 
     render() {
-        console.log(process.env.GOOGLE_RECATCHA_SITE_KEY);
         let nameError;
         if(this.state.nameError) {
             nameError = (<label>{this.state.nameError}</label>)
@@ -90,11 +90,6 @@ class App extends Component {
                         <textarea className="form-control" id="user-comments" placeholder="Enter comments if required" />
                     </div>
 
-                    <Recaptcha
-                        sitekey={process.env.GOOGLE_RECATCHA_SITE_KEY}
-                        render="explicit"
-                    />
-
                     <button type="submit" className="btn btn-primary center-block" onClick={this.requestService}>
                         Request Service</button>
                 </form>
@@ -117,10 +112,21 @@ class App extends Component {
         }
 
         if(validEntries) {
-            console.log('All Entered entries are correct');
+            this.requestService();
         }
 
-        console.log(this.state.selectedTime);
+    }
+
+    requestService() {
+        var content = this.state.name + ' ' + this.state.mobileNumber +
+         ' ' + this.state.selectedService + ' ' + this.state.selectedTime +
+         this.state.selectedDay + ' ' + this.state.address +
+         this.state.comments;
+
+         sendEmail(content, function(response) {
+             console.log('response received by app.js');
+         })
+
     }
 }
 

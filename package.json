@@ -34,6 +34,7 @@
     "react-recaptcha": "^2.1.1",
     "react-redux": "^4.0.0",
     "react-router": "^2.0.1",
-    "redux": "^3.0.4"
+    "redux": "^3.0.4",
+    "sendgrid": "^4.0.1"
   }
 }
