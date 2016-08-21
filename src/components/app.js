@@ -9,9 +9,10 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = { name: '', mobileNumber: '', selectedService: '',
-         selectedTime: '', address: '', comments: '',
+         selectedTime: '', address: '', comments: '', selectedDay: 'Today',
             nameError: '', mobileNumberError: '', addressError: ''};
         this.onSubmit = this.onSubmit.bind(this);
+        this.requestService = this.requestService.bind(this);
     }
 
     render() {
@@ -28,6 +29,11 @@ class App extends Component {
         let addressError;
         if(this.state.addressError) {
             addressError = (<label>this.state.addressError</label>)
+        }
+
+        let commentsError;
+        if(this.state.commentsError) {
+            commentsError = (<label>this.state.commentsError</label>)
         }
 
         return (
@@ -48,11 +54,12 @@ class App extends Component {
                         <input type="number" className="form-control" id="user-mobile-number"
                         value={this.state.mobileNumber}
                          placeholder="Enter Mobile Number" onChange={(event)=>this.setState({mobileNumber: event.target.value})}/>
+                         {mobileNumberError}
                     </div>
 
                     <div className="form-group">
                         <label>Select service</label>
-                        <select className="form-control" onChange={(event)=>this.setState({selectedTime: event.target.value})}>
+                        <select className="form-control" onChange={(event)=>this.setState({selectedService: event.target.value})}>
                             <option value="Home Cleaning Service">Home Cleaning Service</option>
                             <option value="Sofa Cleaning">Sofa Cleaning</option>
                             <option value="Bathroom Cleaning">Bathroom Cleaning</option>
@@ -64,7 +71,7 @@ class App extends Component {
 
                     <div className="form-group">
                         <label>Preferred Time(we will reach to you for confirmation)</label>
-                        <select className="form-control">
+                        <select className="form-control" onChange={(event)=>this.setState({selectedTime: event.target.value})}>
                             <option>As Soon As Possible</option>
                             <option>10:00 AM to 1:00 PM</option>
                             <option>1:00 PM to 4:00 PM</option>
@@ -74,7 +81,7 @@ class App extends Component {
 
                     <div className="form-group">
                         <label>Preferred Day</label>
-                        <select className="form-control">
+                        <select className="form-control" onChange={(event)=>this.setState({selectedDay: event.target.value})}>
                             <option value="Today">Today</option>
                             <option value="Tomorrow">Tomorrow</option>
                         </select>
@@ -82,15 +89,19 @@ class App extends Component {
 
                     <div className="form-group">
                         <label>Address</label>
-                        <textarea className="form-control" id="user-address" placeholder="Enter Address" />
+                        <textarea className="form-control" id="user-address" placeholder="Enter Address"
+                         onChange={(event)=>this.setState({address: event.target.value})} />
+                         {addressError}
                     </div>
 
                     <div className="form-group">
                         <label>Comments</label>
-                        <textarea className="form-control" id="user-comments" placeholder="Enter comments if required" />
+                        <textarea className="form-control" id="user-comments" placeholder="Enter comments if required"
+                            onChange={(event)=>this.setState({comments: event.target.value})}/>
+                        {commentsError}
                     </div>
 
-                    <button type="submit" className="btn btn-primary center-block" onClick={this.requestService}>
+                    <button type="submit" className="btn btn-primary center-block">
                         Request Service</button>
                 </form>
             </div>
@@ -102,19 +113,19 @@ class App extends Component {
         e.preventDefault();
 
         var validEntries = true;
-        if(this.state.name.length < 5) {
-            this.setState({nameError: 'Enter proper name'});
-            validEntries = false;
-        }
-        if(this.state.mobileNumber.length != 10) {
-            this.setState({mobileNumberError: 'Please Enter mobile number in proper format'});
-            validEntries = false;
-        }
+        // if(this.state.name.length < 5) {
+        //     this.setState({nameError: 'Enter proper name'});
+        //     validEntries = false;
+        // }
+        //
+        // if(this.state.mobileNumber.length != 10) {
+        //     this.setState({mobileNumberError: 'Please Enter mobile number in proper format'});
+        //     validEntries = false;
+        // }
 
         if(validEntries) {
             this.requestService();
         }
-
     }
 
     requestService() {
@@ -123,8 +134,13 @@ class App extends Component {
          this.state.selectedDay + ' ' + this.state.address +
          this.state.comments;
 
-         sendEmail(content, function(response) {
-             console.log('response received by app.js');
+         console.log('Content is ' + content);
+         sendEmail(content, function(response, error) {
+             if(error == null) {
+                 console.log('Error occured while making request');
+             } else {
+                 console.log('response is ' + response);
+             }
          })
 
     }
