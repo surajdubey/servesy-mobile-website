@@ -135,8 +135,8 @@ class App extends Component {
          this.state.comments;
 
          console.log('Content is ' + content);
-         sendEmail(content, function(response, error) {
-             if(error == null) {
+         sendEmail(content, function(response) {
+             if(response == null) {
                  console.log('Error occured while making request');
              } else {
                  console.log('response is ' + response);
