@@ -1,11 +1,11 @@
 {
-  "name": "redux-simple-starter",
+  "name": "servesy-mobile-site",
   "version": "1.0.0",
-  "description": "Simple starter package for Redux with React and Babel support",
-  "main": "main.js",
+  "description": "Servesy Mobile Site",
+  "main": "server.js",
   "repository": "git@github.com:StephenGrider/ReduxSimpleStarter.git",
   "scripts": {
-    "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
+    "start": "node server.js",
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js --recursive ./test",
     "test:watch": "npm run test -- --watch"
   },
@@ -23,19 +23,21 @@
     "mocha": "^2.4.5",
     "react-addons-test-utils": "^0.14.7",
     "webpack": "^1.12.9",
-    "webpack-dev-server": "^1.14.0"
+    "webpack-dev-server": "^1.14.0",
+    
+    "webpack-dev-middleware": "^1.6.1",
+    "webpack-dev-server": "^1.14.1",
+    "webpack-hot-middleware": "^2.10.0"
   },
   "dependencies": {
     "babel-preset-stage-1": "^6.1.18",
-    "dotenv": "^2.0.0",
+    "express": "^4.14.0",
     "lodash": "^3.10.1",
-    "mailgun-js": "^0.7.12",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
     "react-recaptcha": "^2.1.1",
     "react-redux": "^4.0.0",
     "react-router": "^2.0.1",
-    "redux": "^3.0.4",
-    "sendgrid": "^4.0.1"
+    "redux": "^3.0.4"
   }
 }
