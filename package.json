@@ -7,7 +7,9 @@
   "scripts": {
     "start": "node main.js",
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js --recursive ./test",
-    "test:watch": "npm run test -- --watch"
+    "test:watch": "npm run test -- --watch",
+    "postinstall": "webpack -p --allow-root --config webpack.prod.config.js"
+
   },
   "author": "",
   "license": "ISC",
@@ -39,5 +41,8 @@
     "react-redux": "^4.0.0",
     "react-router": "^2.0.1",
     "redux": "^3.0.4"
+  }, 
+  "config" : {
+    "unsafe-perm":true
   }
 }

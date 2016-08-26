@@ -18,13 +18,17 @@ if(process.env.NODE_ENV !== 'production') {
 app.use(express.static(path.join(__dirname, 'src')));
 
 app.get('/', function(request, response) {
-  response.sendFile(__dirname + '/src/index.html')
+  response.sendFile(__dirname + '/dist/index.html')
+});
+
+app.get('/dist/bundle.js', function(request, response) {
+  response.sendFile(__dirname + '/dist/bundle.js')
 });
 
 app.listen(PORT, function(error) {
   if (error) {
     console.error(error);
   } else {
-    console.info("==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.", PORT, PORT);
+    console.info("==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser. Mode:%s", PORT, PORT, process.env.NODE_ENV);
   }
 });
