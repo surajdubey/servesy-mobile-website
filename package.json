@@ -2,10 +2,10 @@
   "name": "servesy-mobile-site",
   "version": "1.0.0",
   "description": "Servesy Mobile Site",
-  "main": "node main.js",
+  "main": "main.js",
   "repository": "git@github.com:StephenGrider/ReduxSimpleStarter.git",
   "scripts": {
-    "start": "node server.js",
+    "start": "node main.js",
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js --recursive ./test",
     "test:watch": "npm run test -- --watch"
   },
