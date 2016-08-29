@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import Recaptcha from 'react-recaptcha';
 import config from '../../config';
@@ -8,9 +7,9 @@ class App extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { name: '', mobileNumber: '', selectedService: '',
-         selectedTime: '', address: '', comments: '', selectedDay: 'Today',
-            nameError: '', mobileNumberError: '', addressError: ''};
+        this.state = { name: '', mobileNumber: '', selectedService: 'Home Cleaning Service',
+         selectedTime: 'As Soon As Possible', address: '', comments: '', selectedDay: 'Today',
+            nameError: '', mobileNumberError: '', addressError: '', serviceBooked: ''};
         this.onSubmit = this.onSubmit.bind(this);
         this.requestService = this.requestService.bind(this);
     }
@@ -18,22 +17,41 @@ class App extends Component {
     render() {
         let nameError;
         if(this.state.nameError) {
-            nameError = (<label>{this.state.nameError}</label>)
+            nameError = (<div className="alert alert-danger error-message">
+                            {this.state.nameError}
+                        </div>)
         }
 
         let mobileNumberError;
         if(this.state.mobileNumberError) {
-            mobileNumberError = (<label>this.state.mobileNumberError</label>)
+            mobileNumberError = (<div className="alert alert-danger error-message">
+                                    {this.state.mobileNumberError}
+                                </div>)
         }
 
         let addressError;
         if(this.state.addressError) {
-            addressError = (<label>this.state.addressError</label>)
+            addressError = (<div className="alert alert-danger error-message">
+                                {this.state.addressError}
+                            </div>)
         }
 
         let commentsError;
         if(this.state.commentsError) {
             commentsError = (<label>this.state.commentsError</label>)
+        }
+
+        let serviceBookedMessage;
+        if(this.state.serviceBooked == 'true') {
+            serviceBookedMessage = (<div className="alert alert-success"><strong>
+                                "Service request is booked successfully. We will reach to you very soon"
+                                     </strong>
+                                    </div>)
+        } if(this.state.serviceBooked == 'false') {
+            serviceBookedMessage = (<div className="alert alert-danger"><strong>
+                                "There was some error while booking your request. Please try again after some time"
+                                     </strong>
+                                    </div>)
         }
 
         return (
@@ -101,6 +119,8 @@ class App extends Component {
                         {commentsError}
                     </div>
 
+                    {serviceBookedMessage}
+
                     <button type="submit" className="btn btn-primary center-block">
                         Request Service</button>
                 </form>
@@ -112,33 +132,49 @@ class App extends Component {
     onSubmit(e) {
         e.preventDefault();
 
+        //remove all error messages
+        this.setState({nameError: '', mobileNumberError: '', addressError: ''})
+
         var validEntries = true;
-        // if(this.state.name.length < 5) {
-        //     this.setState({nameError: 'Enter proper name'});
-        //     validEntries = false;
-        // }
-        //
-        // if(this.state.mobileNumber.length != 10) {
-        //     this.setState({mobileNumberError: 'Please Enter mobile number in proper format'});
-        //     validEntries = false;
-        // }
+        if(this.state.name.length < 5) {
+            this.setState({nameError: 'Name must have at least 5 characters'});
+            validEntries = false;
+        }
+
+        if(this.state.mobileNumber.length != 10) {
+            this.setState({mobileNumberError: 'Mobile number must have 10 digits'});
+            validEntries = false;
+        }
+
+        if(this.state.address.length == 0) {
+            this.setState({addressError: 'Please enter address'});
+            validEntries = false;
+        }
 
         if(validEntries) {
-            this.requestService();
+            var data = {
+                name: this.state.name,
+                mobileNumber: this.state.mobileNumber,
+                service: this.state.selectedService,
+                selectedTime: this.state.selectedTime,
+                selectedDay: this.state.selectedDay,
+                address: this.state.address,
+                comments: this.state.comments
+            }
+
+            this.requestService(data);
         }
     }
 
-    requestService() {
-        var content = this.state.name + ' ' + this.state.mobileNumber +
-         ' ' + this.state.selectedService + ' ' + this.state.selectedTime +
-         this.state.selectedDay + ' ' + this.state.address +
-         this.state.comments;
+    requestService(data) {
 
-         console.log('Content is ' + content);
-         sendEmail(content, function(response) {
+         console.log('Data to be submitted is ' + JSON.stringify(data));
+         sendEmail(data, response => {
              if(response == null) {
+                 this.setState({serviceBooked: 'false'});
                  console.log('Error occured while making request');
              } else {
+                 this.setState({serviceBooked: 'true'});
                  console.log('response is ' + response);
              }
          })

@@ -1,6 +1,6 @@
 import config from '../config';
 
-var sendEmail = function(contentValue, callback) {
+var sendEmail = function(data, callback) {
 
     fetch(config.BASE_URL + 'requestService', {
         method: 'post',
@@ -8,9 +8,7 @@ var sendEmail = function(contentValue, callback) {
             'Accept' : 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-            'content': contentValue
-        })
+        body: JSON.stringify(data)
     })
     .then((response)=> response.json())
     .then((responseData) => callback(responseData))
