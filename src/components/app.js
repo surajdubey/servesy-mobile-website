@@ -3,6 +3,14 @@ import Recaptcha from 'react-recaptcha';
 import config from '../../config';
 import sendEmail from '../sendEmail';
 
+const recaptchaVerifyCallback = (response) => {
+    console.log('verified');
+}
+
+const callback = () => {
+    console.log('callback');
+}
+
 class App extends Component {
 
     constructor(props) {
@@ -56,8 +64,6 @@ class App extends Component {
 
         return (
             <div>
-                <div>Welcome to servesy mobile website</div>
-
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
                         <label>Name</label>
@@ -102,6 +108,8 @@ class App extends Component {
                         <select className="form-control" onChange={(event)=>this.setState({selectedDay: event.target.value})}>
                             <option value="Today">Today</option>
                             <option value="Tomorrow">Tomorrow</option>
+                            <option value="This week">This week</option>
+                            <option value="Next week">Next week</option>
                         </select>
                     </div>
 
@@ -123,6 +131,14 @@ class App extends Component {
 
                     <button type="submit" className="btn btn-primary center-block">
                         Request Service</button>
+
+                    <Recaptcha
+                        sitekey={config.GOOGLE_RECATCHA_SITE_KEY}
+                        size="compact"
+                        render="explicit"
+                        verifyCallback={recaptchaVerifyCallback}
+                        onloadCallback={callback}
+                        />
                 </form>
             </div>
 
@@ -181,5 +197,6 @@ class App extends Component {
 
     }
 }
+
 
 export default App;
