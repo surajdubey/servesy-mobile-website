@@ -94,7 +94,7 @@ class App extends Component {
                     </div>
 
                     <div className="form-group">
-                        <label>Preferred Time(we will reach to you for confirmation)</label>
+                        <label>Preferred Time</label>
                         <select className="form-control" onChange={(event)=>this.setState({selectedTime: event.target.value})}>
                             <option>As Soon As Possible</option>
                             <option>10:00 AM to 1:00 PM</option>
@@ -131,14 +131,6 @@ class App extends Component {
 
                     <button type="submit" className="btn btn-primary center-block">
                         Request Service</button>
-
-                    <Recaptcha
-                        sitekey={config.GOOGLE_RECATCHA_SITE_KEY}
-                        size="compact"
-                        render="explicit"
-                        verifyCallback={recaptchaVerifyCallback}
-                        onloadCallback={callback}
-                        />
                 </form>
             </div>
 
