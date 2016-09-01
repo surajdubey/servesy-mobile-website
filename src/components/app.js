@@ -87,8 +87,8 @@ class App extends Component {
                             <option value="Home Cleaning Service">Home Cleaning Service</option>
                             <option value="Sofa Cleaning">Sofa Cleaning</option>
                             <option value="Bathroom Cleaning">Bathroom Cleaning</option>
-
                             <option value="Laundry">Laundry</option>
+                            <option value="Shoe Care">Shoe Care</option>
                             <option value="Pest Control">Pest Control</option>
                         </select>
                     </div>
