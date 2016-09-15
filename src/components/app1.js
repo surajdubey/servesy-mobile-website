@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
+import Recaptcha from 'react-recaptcha';
 import config from '../../config';
 import sendEmail from '../sendEmail';
+
+const recaptchaVerifyCallback = (response) => {
+    console.log('verified');
+}
+
+const callback = () => {
+    console.log('callback');
+}
 
 class App extends Component {
 

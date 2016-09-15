@@ -1,11 +1,15 @@
-/node_modules
-npm-debug.log
+lib-cov
+*.seed
+*.log
+*.csv
+*.dat
+*.out
+*.pid
+*.gz
 
-# IntelliJ
-*.iml
-/.idea
+pids
+logs
+results
+build
 
-# Elastic Beanstalk Files
-.elasticbeanstalk/*
-!.elasticbeanstalk/*.cfg.yml
-!.elasticbeanstalk/*.global.yml
+node_modules
